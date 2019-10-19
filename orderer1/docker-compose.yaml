@@ -17,7 +17,7 @@ services:
       - ORDERER_GENERAL_LOCALMSPID=OrdererOrgMSP
       - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
       # enabled TLS
-      - ORDERER_GENERAL_TLS_ENABLED=false
+      - ORDERER_GENERAL_TLS_ENABLED=true
       - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
       - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
       - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
@@ -40,15 +40,15 @@ services:
     networks:
       - byfn
     extra_hosts:
-      - "peer0.org0.example.com:10.1.1.11"
-      - "peer1.org0.example.com:10.1.1.12"
-      - "peer2.org1.example.com:10.1.1.21"
-      - "peer3.org1.example.com:10.1.1.22"
+      - "peer0.org0.example.com:15.164.140.245"
+      - "peer1.org0.example.com:13.209.61.41"
+      - "peer0.org1.example.com:15.164.153.125"
+      - "peer1.org1.example.com:15.164.121.13"
 
   zookeeper1.example.com:
     image: hyperledger/fabric-zookeeper
     environment:
-      - ZOO_SERVERS=server.1=10.1.1.31:2888:3888 server.2=0.0.0.0:2888:3888 server.3=10.1.1.51:2888:3888
+      - ZOO_SERVERS=server.1=13.124.214.129:2888:3888 server.2=0.0.0.0:2888:3888 server.3=13.209.27.139:2888:3888
       - ZOO_MY_ID=2
     restart: always
     ports:
@@ -62,14 +62,14 @@ services:
     image: hyperledger/fabric-kafka
     restart: always
     environment:
-      - KAFKA_ADVERTISED_HOST_NAME=10.1.1.41
+      - KAFKA_ADVERTISED_HOST_NAME=15.164.187.242
       - KAFKA_ADVERTISED_PORT=9092
       - KAFKA_MESSAGE_MAX_BYTES=103809024
       - KAFKA_REPLICA_FETCH_MAX_BYTES=103809024
       - KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE=false
       - KAFKA_MIN_INSYNC_REPLICAS=1
       - KAFKA_DEFAULT_REPLICATION_FACTOR=4
-      - KAFKA_ZOOKEEPER_CONNECT=10.1.1.31:2181,0.0.0.0:2181,10.1.1.51:2181
+      - KAFKA_ZOOKEEPER_CONNECT=13.124.214.129:2181,0.0.0.0:2181,13.209.27.139:2181
       - KAFKA_BROKER_ID=2
     ports:
       - 9092:9092

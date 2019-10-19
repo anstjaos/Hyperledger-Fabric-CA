@@ -7,6 +7,7 @@ OrdererOrgs:
   # ---------------------------------------------------------------------------
   - Name: OrdererOrg
     Domain: example.com
+    EnableNodeOUs: true
 
     Specs:
       - Hostname: orderer0
@@ -21,6 +22,7 @@ PeerOrgs:
   # ---------------------------------------------------------------------------
   - Name: Org0
     Domain: org0.example.com
+    EnableNodeOUs: true
     # ---------------------------------------------------------------------------
     # "Template"
     # ---------------------------------------------------------------------------
@@ -47,8 +49,8 @@ PeerOrgs:
   # ---------------------------------------------------------------------------
   - Name: Org1
     Domain: org1.example.com
+    EnableNodeOUs: true
     Template:
       Count: 2
-      Start: 2
     Users:
       Count: 1

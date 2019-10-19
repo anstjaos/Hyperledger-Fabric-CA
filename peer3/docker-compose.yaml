@@ -1,49 +1,49 @@
 version: '2'
 
 volumes:
-  peer3.org1.example.com:
+  peer1.org1.example.com:
 
 networks:
   byfn:
 
 services:
-  peer3.org1.example.com:
-    container_name: peer3.org1.example.com
+  peer1.org1.example.com:
+    container_name: peer1.org1.example.com
     image: hyperledger/fabric-peer
     environment:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=${COMPOSE_PROJECT_NAME}_byfn
       - FABRIC_LOGGING_SPEC=INFO
-      - CORE_PEER_TLS_ENABLED=false
+      - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_GOSSIP_ORGLEADER=false
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
-      - CORE_PEER_ID=peer3.org1.example.com
-      - CORE_PEER_ADDRESS=peer3.org1.example.com:7051
+      - CORE_PEER_ID=peer1.org1.example.com
+      - CORE_PEER_ADDRESS=peer1.org1.example.com:7051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_CHAINCODEADDRESS=peer3.org1.example.com:7052
+      - CORE_PEER_CHAINCODEADDRESS=peer1.org1.example.com:7052
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer3.org1.example.com:7051
-      - CORE_PEER_BOOTSTRAP=peer2.org1.example.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org1.example.com:7051
+      - CORE_PEER_BOOTSTRAP=peer0.org1.example.com:7051
       - CORE_PEER_LOCALMSPID=Org1MSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
     volumes:
       - /var/run/:/host/var/run/
       - ./:/etc/hyperledger/configtx
-      - ./crypto-config/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/msp:/etc/hyperledger/fabric/msp
-      - ./crypto-config/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/tls:/etc/hyperledger/fabric/tls
-      - peer3.org1.example.com:/var/hyperledger/production
+      - ./crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp:/etc/hyperledger/fabric/msp
+      - ./crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.org1.example.com:/var/hyperledger/production
     ports:
       - 7051:7051
     extra_hosts:
-      - "peer0.org0.example.com:10.1.1.11"
-      - "peer1.org0.example.com:10.1.1.12"
-      - "peer2.org1.example.com:10.1.1.21"
-      - "orderer0.example.com:10.1.1.31"
-      - "orderer1.example.com:10.1.1.41"
-      - "orderer2.example.com:10.1.1.51"
+      - "peer0.org0.example.com:15.164.140.245"
+      - "peer1.org0.example.com:13.209.61.41"
+      - "peer0.org1.example.com:15.164.153.125"
+      - "orderer0.example.com:13.124.214.219"
+      - "orderer1.example.com:15.164.187.242"
+      - "orderer2.example.com:13.209.27.139"
     networks:
       - byfn
    # network_mode: host
@@ -61,12 +61,12 @@ services:
       #- FABRIC_LOGGING_SPEC=DEBUG
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_ID=cli
-      - CORE_PEER_ADDRESS=peer3.org1.example.com:7051
+      - CORE_PEER_ADDRESS=peer1.org1.example.com:7051
       - CORE_PEER_LOCALMSPID=Org1MSP
-      - CORE_PEER_TLS_ENABLED=false
-      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer3.org1.example.com/tls/ca.crt
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
       - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
@@ -76,13 +76,13 @@ services:
         - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
         - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
-      - peer3.org1.example.com
+      - peer1.org1.example.com
     networks:
       - byfn
     extra_hosts:
-      - "orderer0.example.com:10.1.1.31"
-      - "orderer1.example.com:10.1.1.41"
-      - "orderer2.example.com:10.1.1.51"
-      - "peer0.org0.example.com:10.1.1.11"
-      - "peer1.org0.example.com:10.1.1.12"
-      - "peer2.org1.example.com:10.1.1.21"
+      - "orderer0.example.com:13.124.214.129"
+      - "orderer1.example.com:15.164.187.242"
+      - "orderer2.example.com:13.209.27.139"
+      - "peer0.org0.example.com:15.164.140.245"
+      - "peer1.org0.example.com:13.209.61.41"
+      - "peer0.org1.example.com:15.164.153.125"
