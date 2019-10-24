@@ -46,8 +46,8 @@ Organizations:
                 Rule: "OR('Org0MSP.admin')"
 
         AnchorPeers:
-          - Host: peer0.org0.example.com
-            Port: 7051
+            - Host: peer0.org0.example.com
+              Port: 7051
 
     - &Org1
         Name: Org1MSP
@@ -66,8 +66,8 @@ Organizations:
                 Rule: "OR('Org1MSP.admin')"
 
         AnchorPeers:
-          - Host: peer0.org1.example.com
-            Port: 7051
+            - Host: peer0.org1.example.com
+              Port: 7051
 
 ################################################################################
 #
@@ -91,7 +91,6 @@ Orderer: &OrdererDefaults
     MaxChannels: 0
 
     BatchSize:
-
         MaxMessageCount: 30
 
         AbsoluteMaxBytes: 99 MB
