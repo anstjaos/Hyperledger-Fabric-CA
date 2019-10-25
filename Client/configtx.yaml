@@ -16,16 +16,16 @@ Organizations:
 
         MSPDir: crypto-config/ordererOrganizations/example.com/msp/
 
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('OrdererOrgMSP.member')"
-            Writers:
-                Type: Signature
-                Rule: "OR('OrdererOrgMSP.member')"
-            Admins:
-                Type: Signature
-                Rule: "OR('OrdererOrgMSP.admin')"
+#        Policies:
+#            Readers:
+#                Type: Signature
+#                Rule: "OR('OrdererOrgMSP.member')"
+#            Writers:
+#                Type: Signature
+#                Rule: "OR('OrdererOrgMSP.member')"
+#            Admins:
+#                Type: Signature
+#                Rule: "OR('OrdererOrgMSP.admin')"
 
     - &Org0
         Name: Org0MSP
@@ -34,16 +34,16 @@ Organizations:
 
         MSPDir: crypto-config/peerOrganizations/org0.example.com/msp/
 
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('Org0MSP.admin', 'Org0MSP.peer', 'Org0MSP.client')"
-            Writers:
-                Type: Signature
-                Rule: "OR('Org0MSP.admin', 'Org0MSP.client')"
-            Admins:
-                Type: Signature
-                Rule: "OR('Org0MSP.admin')"
+ #       Policies:
+ #           Readers:
+ #               Type: Signature
+ #               Rule: "OR('Org0MSP.admin', 'Org0MSP.peer', 'Org0MSP.client')"
+ #           Writers:
+ #               Type: Signature
+ #               Rule: "OR('Org0MSP.admin', 'Org0MSP.client')"
+ #           Admins:
+ #               Type: Signature
+ #               Rule: "OR('Org0MSP.admin')"
 
         AnchorPeers:
             - Host: peer0.org0.example.com
@@ -54,16 +54,16 @@ Organizations:
         ID: Org1MSP
         MSPDir: crypto-config/peerOrganizations/org1.example.com/msp/
 
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('Org1MSP.admin', 'Org1MSP.peer', 'Org1MSP.client')"
-            Writers:
-                Type: Signature
-                Rule: "OR('Org1MSP.admin', 'Org1MSP.client')"
-            Admins:
-                Type: Signature
-                Rule: "OR('Org1MSP.admin')"
+#        Policies:
+#            Readers:
+#                Type: Signature
+#                Rule: "OR('Org1MSP.admin', 'Org1MSP.peer', 'Org1MSP.client')"
+#            Writers:
+#                Type: Signature
+#                Rule: "OR('Org1MSP.admin', 'Org1MSP.client')"
+#            Admins:
+#                Type: Signature
+#                Rule: "OR('Org1MSP.admin')"
 
         AnchorPeers:
             - Host: peer0.org1.example.com
@@ -107,19 +107,19 @@ Orderer: &OrdererDefaults
 
     Organizations:
 
-    Policies:
-        Readers:
-            Type: ImplicitMeta
-            Rule: "ANY Readers"
-        Writers:
-            Type: ImplicitMeta
-            Rule: "ANY Writers"
-        Admins:
-            Type: ImplicitMeta
-            Rule: "MAJORITY Admins"
-        BlockValidation:
-            Type: ImplicitMeta
-            Rule: "ANY Writers"
+#    Policies:
+#        Readers:
+#            Type: ImplicitMeta
+#            Rule: "ANY Readers"
+#        Writers:
+#            Type: ImplicitMeta
+#            Rule: "ANY Writers"
+#        Admins:
+#            Type: ImplicitMeta
+#            Rule: "MAJORITY Admins"
+#        BlockValidation:
+#            Type: ImplicitMeta
+#            Rule: "ANY Writers"
 ################################################################################
 #
 #   APPLICATION
@@ -136,31 +136,31 @@ Application: &ApplicationDefaults
     # network.
     Organizations:
 
-    Policies:
-        Readers:
-            Type: ImplicitMeta
-            Rule: "ANY Readers"
-        Writers:
-            Type: ImplicitMeta
-            Rule: "ANY Writers"
-        Admins:
-            Type: ImplicitMeta
-            Rule: "MAJORITY Admins"
+#    Policies:
+#        Readers:
+#            Type: ImplicitMeta
+#            Rule: "ANY Readers"
+#        Writers:
+#            Type: ImplicitMeta
+#            Rule: "ANY Writers"
+#        Admins:
+#            Type: ImplicitMeta
+#            Rule: "MAJORITY Admins"
 
 
 
-Channel: &ChannelDefaults
+#Channel: &ChannelDefaults
 
-    Policies:
-        Readers:
-            Type: ImplicitMeta
-            Rule: "ANY Readers"
-        Writers:
-            Type: ImplicitMeta
-            Rule: "ANY Writers"
-        Admins:
-            Type: ImplicitMeta
-            Rule: "MAJORITY Admins"
+#    Policies:
+#        Readers:
+#            Type: ImplicitMeta
+#            Rule: "ANY Readers"
+#        Writers:
+#            Type: ImplicitMeta
+#            Rule: "ANY Writers"
+#        Admins:
+#            Type: ImplicitMeta
+#            Rule: "MAJORITY Admins"
 
 
 ################################################################################
@@ -178,7 +178,7 @@ Channel: &ChannelDefaults
 Profiles:
 
     TwoOrgsOrdererGenesis:
-        <<: *ChannelDefaults
+#        <<: *ChannelDefaults
         Orderer:
             <<: *OrdererDefaults
             Organizations:
@@ -191,7 +191,7 @@ Profiles:
 
     TwoOrgsChannel:
         Consortium: SampleConsortium
-        <<: *ChannelDefaults
+#        <<: *ChannelDefaults
         Application:
             <<: *ApplicationDefaults
             Organizations:
