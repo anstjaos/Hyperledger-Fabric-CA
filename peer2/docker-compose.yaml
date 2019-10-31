@@ -14,7 +14,7 @@ services:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=${COMPOSE_PROJECT_NAME}_byfn
       - FABRIC_LOGGING_SPEC=INFO
-      - CORE_PEER_TLS_ENABLED=false
+      - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_GOSSIP_ORGLEADER=false
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
@@ -41,7 +41,7 @@ services:
       - "peer0.org0.example.com:15.164.140.245"
       - "peer1.org0.example.com:13.209.61.41"
       - "peer1.org1.example.com:15.164.121.13"
-      - "orderer0.example.com:13.124.214.139"
+      - "orderer0.example.com:13.124.214.129"
       - "orderer1.example.com:15.164.187.242"
       - "orderer2.example.com:13.209.27.139"
     networks:
@@ -63,7 +63,7 @@ services:
       - CORE_PEER_ID=cli
       - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
       - CORE_PEER_LOCALMSPID=Org1MSP
-      - CORE_PEER_TLS_ENABLED=false
+      - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
@@ -80,7 +80,7 @@ services:
     networks:
       - byfn
     extra_hosts:
-      - "orderer0.example.com:13.124.214.219"
+      - "orderer0.example.com:13.124.214.129"
       - "orderer1.example.com:15.164.187.242"
       - "orderer2.example.com:13.209.27.139"
       - "peer0.org0.example.com:15.164.140.245"
