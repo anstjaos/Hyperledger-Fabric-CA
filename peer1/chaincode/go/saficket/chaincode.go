@@ -1,4 +1,4 @@
-package main
+package saficket
 
 /* Imports
  * 4 utility libraries for formatting, handling bytes, reading and writing JSON, and string manipulation
@@ -35,7 +35,19 @@ type Ticket struct {
  */
 
 func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
-	return s.initLedger(APIstub)
+	tickets := []Ticket{
+		Ticket{TicketNo: "EVN001", AttendeeId: "owen1994", EventId: "fk948fsld2",Venue: "coex_conference_room", EventDate: "2019-10-22", EventTime: "19:00", TicketIssuer:"interpark"},
+		Ticket{TicketNo: "CON222", AttendeeId: "chris88", EventId: "fk94kh3rsw",Venue: "sejong_art_hall", EventDate: "2019-10-24", EventTime: "13:00", TicketIssuer: "auction"},
+	}
+
+	i := 0
+
+	for i < len(tickets) {
+		ticketAsBytes, _ := json.Marshal(tickets[i])
+		APIstub.PutState(tickets[i].TicketNo, ticketAsBytes)
+		i = i + 1
+	}
+	return shim.Success(nil)
 }
 
 /*
@@ -175,11 +187,3 @@ func (s *SmartContract) deleteTicket(APIstub shim.ChaincodeStubInterface, args [
 	return shim.Success(nil)
 }
 // The main function is only relevant in unit test mode. Only included here for completeness.
-
-func main() {
-	// Create a new Smart Contract
-	err := shim.Start(new(SmartContract))
-	if err != nil {
-		fmt.Printf("Error creating new Smart Contract: %s", err)
-	}
-}
