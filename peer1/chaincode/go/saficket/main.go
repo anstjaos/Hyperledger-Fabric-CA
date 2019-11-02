@@ -35,7 +35,7 @@ type Ticket struct {
  */
 
 func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
-	return shim.Success(nil)
+	return s.initLedger(APIstub)
 }
 
 /*
@@ -179,7 +179,6 @@ func (s *SmartContract) deleteTicket(APIstub shim.ChaincodeStubInterface, args [
 func main() {
 	// Create a new Smart Contract
 	err := shim.Start(new(SmartContract))
-
 	if err != nil {
 		fmt.Printf("Error creating new Smart Contract: %s", err)
 	}

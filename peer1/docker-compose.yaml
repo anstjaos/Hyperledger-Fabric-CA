@@ -80,7 +80,7 @@ services:
     networks:
       - byfn
     extra_hosts:
-      - "orderer0.example.com:13.124.214.219"
+      - "orderer0.example.com:13.124.214.129"
       - "orderer1.example.com:15.164.187.242"
       - "orderer2.example.com:13.209.27.139"
       - "peer0.org0.example.com:15.164.140.245"
