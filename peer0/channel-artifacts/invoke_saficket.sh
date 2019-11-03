@@ -5,4 +5,4 @@ export CORE_PEER_LOCALMSPID="Org0MSP"
 export CORE_PEER_MSPCONFIGPATH=$FABRIC_PATH/crypto/peerOrganizations/org0.example.com/users/Admin@org0.example.com/msp
 export CORE_PEER_ADDRESS=peer0.org0.example.com:7051
 
-peer chaincode invoke -o orderer0.example.com:7050 --tls --cafile $FABRIC_PATH/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C ch1 -n saficket -c '{"function":"initLedger","Args":[""]}'
+peer chaincode invoke -o orderer0.example.com:7050 --tls --cafile $FABRIC_PATH/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C ch1 -n saficket -c '{"function":"createNewTicket","Args":["skdltm357iugood2","skdltm357","iugood","samsung","2019-11-02","1102","interpark"]}'

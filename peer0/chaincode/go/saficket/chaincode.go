@@ -140,6 +140,7 @@ func (s *SmartContract) queryUserTickets(APIstub shim.ChaincodeStubInterface, ar
 	buffer.WriteString("[")
 	bArrayMemberAlreadyWritten := false
 	for resultsIterator.HasNext() {
+
 		queryResponse, err := resultsIterator.Next()
 		if err != nil {
 			return shim.Error(err.Error())
@@ -149,11 +150,20 @@ func (s *SmartContract) queryUserTickets(APIstub shim.ChaincodeStubInterface, ar
 		json.Unmarshal(queryResponse.Value, &raw)
 		id := fmt.Sprintf("%v", raw["attendee_id"])
 		ticketCode := fmt.Sprintf("%v", raw["ticket_code"])
+		eventName := fmt.Sprintf("%v", raw["event_name"])
+		eventDate := fmt.Sprintf("%v", raw["event_date"])
 		if id == args[0] {
 			if bArrayMemberAlreadyWritten == true {
 				buffer.WriteString(", ")
 			}
+
+			buffer.WriteString("{ \"TicketCode\" : \"")
 			buffer.WriteString(ticketCode)
+			buffer.WriteString("\", \"EventName\" : \"")
+			buffer.WriteString(eventName)
+			buffer.WriteString("\", \"EventDate\" : \"")
+			buffer.WriteString(eventDate)
+			buffer.WriteString("\" }")
 			bArrayMemberAlreadyWritten = true
 		}
 	}
@@ -170,8 +180,8 @@ func (s *SmartContract) queryOneTicket(APIstub shim.ChaincodeStubInterface, args
 	if err != nil {
 		return shim.Error(err.Error())
 	}
-
 	defer resultsIterator.Close()
+
 	// buffer is a JSON array containing QueryResults
 	var buffer bytes.Buffer
 
