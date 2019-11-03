@@ -23,10 +23,10 @@ type Ticket struct {
 	TicketCode   string `json:"ticket_code"`
 	AttendeeId   string `json:"attendee_id"`
 	EventName    string `json:"event_name"`
-	Venue        string `json:venue`
-	EventDate    string `json:event_date` // 2019-10-22
-	EventTime    string `json:event_time` // 19:00
-	TicketIssuer string `json:ticket_issuer`
+	Venue        string `json:"venue"`
+	EventDate    string `json:"event_date"` // 2019-10-22
+	EventTime    string `json:"event_time"` // 19:00
+	TicketIssuer string `json:"ticket_issuer"`
 }
 
 /*
