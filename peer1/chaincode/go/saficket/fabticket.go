@@ -8,7 +8,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"time"
 
 	// "strconv"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
@@ -20,12 +19,13 @@ type SmartContract struct {
 }
 
 type Ticket struct {
-	AttendeeId   string `json:"attendee_id"`
-	EventName    string `json:"event_name"`
-	Venue        string `json:"venue"`
-	EventDate    string `json:"event_date"` // 2019-10-22
-	EventTime    string `json:"event_time"` // 19:00
-	TicketIssuer string `json:"ticket_issuer"`
+	AttendeeId   string `json:"attendee_id"`   // owen1994
+	EventName    string `json:"event_name"`    // iu concert
+	Venue        string `json:"venue"`         // olympic stadium
+	EventDate    string `json:"event_date"`    // 2019-10-22
+	EventTime    string `json:"event_time"`    // 19:00
+	TicketIssuer string `json:"ticket_issuer"` // interpark
+	PaymentTime  string `json:"payment_time"`  // 20191112093442
 }
 
 /*
@@ -63,14 +63,14 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 
 	tickets := []Ticket{
-		Ticket{AttendeeId: "owen1994", EventName: "IU Concert", Venue: "coex_conference_room", EventDate: "2019-10-22", EventTime: "19:00", TicketIssuer: "interpark"},
-		Ticket{AttendeeId: "chris88", EventName: "Mammamia", Venue: "sejong_art_hall", EventDate: "2019-10-24", EventTime: "13:00", TicketIssuer: "auction"},
+		Ticket{AttendeeId: "owen1994", EventName: "IU Concert", Venue: "coex_conference_room", EventDate: "2019-10-22", EventTime: "19:00", TicketIssuer: "interpark", PaymentTime: "20191012091234"},
+		Ticket{AttendeeId: "chris88", EventName: "Mammamia", Venue: "sejong_art_hall", EventDate: "2019-10-24", EventTime: "13:00", TicketIssuer: "auction", PaymentTime: "20191106120034"},
 	}
 
 	i := 0
 	for i < len(tickets) {
 		ticketAsBytes, _ := json.Marshal(tickets[i])
-		APIstub.PutState(tickets[i].AttendeeId+"20191017123456", ticketAsBytes)
+		APIstub.PutState(tickets[i].AttendeeId+tickets[i].PaymentTime, ticketAsBytes)
 		i = i + 1
 	}
 
@@ -79,14 +79,14 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 
 func (s *SmartContract) createNewTicket(APIstub shim.ChaincodeStubInterface, args []string) sc.Response { // 티켓 하나 생성
 
-	if len(args) != 6 {
-		return shim.Error("Incorrect number of arguments. Expecting 6")
+	if len(args) != 7 {
+		return shim.Error("Incorrect number of arguments. Expecting 7")
 	}
 	startKey := args[0] + "20190000000000"
 	endKey := args[0] + "20191231235959"
 
-	t := time.Now()
-	formatted := fmt.Sprintf("%d%02d%02d%02d%02d%02d", t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second())
+	// t := time.Now()
+	// formatted := fmt.Sprintf("%d%02d%02d%02d%02d%02d", t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second())
 
 	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
 	if err != nil {
@@ -99,14 +99,14 @@ func (s *SmartContract) createNewTicket(APIstub shim.ChaincodeStubInterface, arg
 		if err != nil {
 			return shim.Error(err.Error())
 		}
-		if queryResponse.Key == args[0]+formatted {
+		if queryResponse.Key == args[0]+args[6] {
 			return shim.Success([]byte("false"))
 		}
 	}
-	var ticket = Ticket{AttendeeId: args[0], EventName: args[1], Venue: args[2], EventDate: args[3], EventTime: args[4], TicketIssuer: args[5]}
+	var ticket = Ticket{AttendeeId: args[0], EventName: args[1], Venue: args[2], EventDate: args[3], EventTime: args[4], TicketIssuer: args[5], PaymentTime: args[6]}
 
 	ticketAsBytes, _ := json.Marshal(ticket)
-	APIstub.PutState(args[0]+formatted, ticketAsBytes)
+	APIstub.PutState(args[0]+args[6], ticketAsBytes)
 	return shim.Success([]byte("true"))
 }
 
@@ -166,6 +166,10 @@ func (s *SmartContract) queryOneTicket(APIstub shim.ChaincodeStubInterface, args
 	}
 
 	value, err := APIstub.GetState(args[0])
+	fmt.Println("value")
+	fmt.Println(value)
+	fmt.Println("err")
+	fmt.Println(err)
 	if err != nil || value == nil {
 		return shim.Error("Key is not correct")
 	}
