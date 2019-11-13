@@ -140,6 +140,7 @@ func (s *SmartContract) queryUserTickets(APIstub shim.ChaincodeStubInterface, ar
 		id := fmt.Sprintf("%v", raw["attendee_id"])
 		eventName := fmt.Sprintf("%v", raw["event_name"])
 		eventDate := fmt.Sprintf("%v", raw["event_date"])
+		paymentTime := fmt.Sprintf("%v", raw["payment_time"])
 		if id == args[0] {
 			if bArrayMemberAlreadyWritten == true {
 				buffer.WriteString(", ")
@@ -150,6 +151,8 @@ func (s *SmartContract) queryUserTickets(APIstub shim.ChaincodeStubInterface, ar
 			buffer.WriteString(eventName)
 			buffer.WriteString("\", \"EventDate\" : \"")
 			buffer.WriteString(eventDate)
+			buffer.WriteString("\", \"PaymentTime\" : \"")
+			buffer.WriteString(paymentTime)
 			buffer.WriteString("\" }")
 			bArrayMemberAlreadyWritten = true
 		}
